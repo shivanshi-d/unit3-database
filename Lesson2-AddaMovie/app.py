@@ -135,6 +135,12 @@ def add_movie():
         if not poster_url:
             poster_url = f"https://placehold.co/image/300x450/bgColor/textColor?text={title}"
             
+        # Validiation with better messages
+        if not title:
+            flash("❌ title is required", "danger")
+            return redirect(url_for("add_movie"))
+        
+
         # create a new movie object
         new_movie = Movie(
             title = title,
@@ -151,6 +157,8 @@ def add_movie():
         db.session.add(new_movie)
         # commit to database (make changes permanent)
         db.session.commit()
+
+        
 
         # redirect to the movies list page
         return redirect(url_for("movies_list"))
